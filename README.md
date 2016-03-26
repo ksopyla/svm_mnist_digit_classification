@@ -29,6 +29,11 @@ Params:
 * http://perso.ens-lyon.fr/vincent.neiger/publications/report_digit_recognition.pdf
 
 
+## Source code
+
+* Download code from GitHub: [https://github.com/ksirg/svm_mnist_digit_classification](https://github.com/ksirg/svm_mnist_digit_classification)
+* Run project at PLON.io: [https://plon.io/explore/svm-mnist-handwritten-digit/USpQjoNcO8QHlmG6T](https://plon.io/explore/svm-mnist-handwritten-digit/USpQjoNcO8QHlmG6T)
+
 
 ## References: 
 
