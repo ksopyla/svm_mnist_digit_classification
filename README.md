@@ -70,8 +70,8 @@ With this params:
 
 ## Source code
 
-* Download code from GitHub: [https://github.com/ksirg/svm_mnist_digit_classification](https://github.com/ksirg/svm_mnist_digit_classification)
-* Run project at PLON.io: [https://plon.io/explore/svm-mnist-handwritten-digit/USpQjoNcO8QHlmG6T](https://plon.io/explore/svm-mnist-handwritten-digit/USpQjoNcO8QHlmG6T)
+* [Download SVM MNIST code from GitHub](https://github.com/ksirg/svm_mnist_digit_classification)
+* [Run SVM MNIST project online](https://plon.io/explore/svm-mnist-handwritten-digit/USpQjoNcO8QHlmG6T)
 
 
 ## Useful SVM MNIST learning materials
@@ -79,7 +79,6 @@ With this params:
 * [MNIST handwritten digit recognition](http://brianfarris.me/static/digit_recognizer.html) - author compares a accuracy of a few machine learning classification algorithms (Random Forest, Stochastic Gradient Descent, Support Vector Machine, Nearest Neighbors)
 * [Digit Recognition using OpenCV, sklearn and Python](http://hanzratech.in/2015/02/24/handwritten-digit-recognition-using-opencv-sklearn-and-python.html) - this blog post presents using HOG features and a multiclass Linear SVM.
 * [Grid search for RBF SVM parameters](http://scikit-learn.org/stable/auto_examples/svm/plot_rbf_parameters.html)
-
 * [Fast and Accurate Digit Classification- technical report](https://www2.eecs.berkeley.edu/Pubs/TechRpts/2009/EECS-2009-159.html) - there is also download page with custom [LibLinear intersection kernel](http://ttic.uchicago.edu/~smaji/projects/digits/)
 * [Random features for large-scale kernel machines](http://www.robots.ox.ac.uk/~vgg/rg/papers/randomfeatures.pdf) Rahimi, A. and Recht, B. - Advances in neural information processing 2007,
 * [Efficient additive kernels via explicit feature maps](http://www.robots.ox.ac.uk/~vedaldi/assets/pubs/vedaldi11efficient.pdf) Vedaldi, A. and Zisserman, A. - Computer Vision and Pattern Recognition 2010
