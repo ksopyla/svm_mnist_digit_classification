@@ -1,7 +1,7 @@
 print(__doc__)
 # Author: Krzysztof Sopyla <krzysztofsopyla@gmail.com>
-# https://machinethoughts.me
-# License: BSD 3 clause
+# https://ksopyla.com
+# License: MIT
 
 # Standard scientific Python imports
 import matplotlib.pyplot as plt
