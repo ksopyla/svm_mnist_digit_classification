@@ -43,11 +43,37 @@ X_data =images/255.0
 Y = targets
 
 #split data to train and test 
-from sklearn.cross_validation import train_test_split
+#from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X_data, Y, test_size=0.15, random_state=42)
 
+
+############### Classification with grid search ##############
+# If you don't want to wait, comment this section and uncommnet section below with 
+# standalone SVM classifier
+
+# Create parameters grid for RBF kernel, we have to set C and gamma
+# from sklearn.model_selection import ParameterGrid
+# param_grid = [{'kernel': ['rbf'], 'C': [0.1,1], 'gamma': [0.1]}]
+# pg =ParameterGrid(param_grid)
+# list(pg)
+
+# from sklearn.model_selection import GridSearchCV
+# parameters = {'kernel':['rbf'], 'C':[1], 'gamma': [0.1, 0.01]}
+
+# svm_clf = svm.SVC()
+# classifier = GridSearchCV(svm_clf, parameters)
+#sorted(clf.cv_results_.keys())
+######################### end grid section #############
+
+
+
+################ Classifier with good params ###########
 # Create a classifier: a support vector classifier
-classifier = svm.SVC(C=1,gamma=0.001)
+# classifier = svm.SVC(C=1,gamma=0.01)
+
+########################################################
+
 
 import datetime as dt
 # We learn the digits on train part
@@ -72,8 +98,8 @@ print("Classification report for classifier %s:\n%s\n"
 cm = metrics.confusion_matrix(expected, predicted)
 print("Confusion matrix:\n%s" % cm)
 
-
-plt.figure()
-
 plot_confusion_matrix(cm)
+
+print("Accuracy={}".format(metrics.accuracy_score(expected, predicted)))
+
 

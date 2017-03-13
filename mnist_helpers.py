@@ -23,6 +23,8 @@ def show_some_digits(images, targets, sample_size=24, title_text='Digit {}' ):
         plt.title(title_text.format(label))
 
 def plot_confusion_matrix(cm, title='Confusion matrix', cmap=plt.cm.Blues):
+    
+    plt.figure(1, figsize=(15, 12), dpi=160)
     plt.imshow(cm, interpolation='nearest', cmap=cmap)
     plt.title(title)
     plt.colorbar()
