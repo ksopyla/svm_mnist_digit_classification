@@ -39,17 +39,17 @@ show_some_digits(images,targets)
 #Y      = targets[rand_idx]
 
 #full dataset classification
-X_data =images/255.0
+X_data = images/255.0
 Y = targets
 
-#split data to train and test 
+#split data to train and test
 #from sklearn.cross_validation import train_test_split
 from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X_data, Y, test_size=0.15, random_state=42)
 
 
 ############### Classification with grid search ##############
-# If you don't want to wait, comment this section and uncommnet section below with 
+# If you don't want to wait, comment this section and uncommnet section below with
 # standalone SVM classifier
 
 # Create parameters grid for RBF kernel, we have to set C and gamma
@@ -61,16 +61,21 @@ X_train, X_test, y_train, y_test = train_test_split(X_data, Y, test_size=0.15, r
 # from sklearn.model_selection import GridSearchCV
 # parameters = {'kernel':['rbf'], 'C':[1], 'gamma': [0.1, 0.01]}
 
-# svm_clf = svm.SVC()
-# classifier = GridSearchCV(svm_clf, parameters)
-#sorted(clf.cv_results_.keys())
+# svm_clsf = svm.SVC()
+# grid_clsf = GridSearchCV(svm_clsf, parameters)
+#sorted(grid_clsf.cv_results_.keys())
+
+#classifier = grid_clsf.best_estimator_
+#params = grid_clsf.best_params
+
 ######################### end grid section #############
 
 
 
 ################ Classifier with good params ###########
 # Create a classifier: a support vector classifier
-# classifier = svm.SVC(C=1,gamma=0.01)
+
+classifier = svm.SVC(C=1,gamma=0.01)
 
 ########################################################
 
@@ -78,12 +83,12 @@ X_train, X_test, y_train, y_test = train_test_split(X_data, Y, test_size=0.15, r
 import datetime as dt
 # We learn the digits on train part
 start_time = dt.datetime.now()
-print 'Start learning at {}'.format(str(start_time))
+print('Start learning at {}'.format(str(start_time)))
 classifier.fit(X_train, y_train)
 end_time = dt.datetime.now() 
-print 'Stop learning {}'.format(str(end_time))
+print('Stop learning {}'.format(str(end_time)))
 elapsed_time= end_time - start_time
-print 'Elapsed learning {}'.format(str(elapsed_time))
+print('Elapsed learning {}'.format(str(elapsed_time)))
 
 
 # Now predict the value of the test
