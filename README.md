@@ -10,7 +10,7 @@ If you want to hit the top performance, this two resources will show you current
 * [Who is the best in MNIST ?](http://rodrigob.github.io/are_we_there_yet/build/classification_datasets_results.html#4d4e495354)
 * [Kaggle digit recognizer comptetition](https://www.kaggle.com/c/digit-recognizer)
 
-Table below shows comparision with other models:
+Table below shows some results in comparison with other models:
 
 
 | Method                                     | Accuracy | Comments     |
@@ -20,27 +20,34 @@ Table below shows comparision with other models:
 | Simple 2 layer convolutional network       | 0.981    |              |
 | SVM RBF                                    |          | C=?, gamma=? |
 | Linear SVM + Nystroem kernel approximation |          |              |
-| Linear SVM +Fourier kernel approximation   |          |              |
-| Linear SVM +Random Kitchen Sinks           |          |              |
+| Linear SVM + Fourier kernel approximation  |          |              |
+------------------------------------------------------------------------
 
 
 ## Solution
 
-In this tutorial I use two approches for SVM learning. First, uses classical SVM with RBF kernel. The drawback of this solution is rather long training on big datasets, although the accuracy with good parameters is high. The second, uses Linear SVM, which allows for training in O(n) time. In order to achieve high accuracy we use some trick. We aproximate RBF kernel in a high dimensional space by embedings. The teory behind is quite complicated, however [scikit-learn has ready to use clases for kernel approximation](http://scikit-learn.org/stable/modules/kernel_approximation.html#kernel-approximation
-). We will use:
+In this tutorial I use two approches for SVM learning. 
+First, uses classical SVM with RBF kernel. The drawback of this solution is rather 
+long training on big datasets, although the accuracy with good parameters is high. 
+The second, uses Linear SVM, which allows for training in O(n) time. In order to 
+achieve high accuracy we use some trick. We aproximate RBF kernel in a high dimensional 
+space by embedings. The teory behind is quite complicated, 
+however [scikit-learn has ready to use clases for kernel approximation](http://scikit-learn.org/stable/modules/kernel_approximation.html#kernel-approximation). 
+We will use:
 
 * Nystroem kernel approximation
 * Fourier kernel approximation
-* Random Kitchen Sinks
 
+
+The code was tested with python 2.7 and python 3.5.
 
 
 ## How the project is organised
 
 Project consist of three files:
 
-* _mnist_helpers.py_ - contains some visualization functions
-* _svm_mnist_classification.py_ - main file for SVM with RBF kernel classification
+* _mnist_helpers.py_ - contains some visualization functions: MNIST digits visualization and confusion matrix
+* _svm_mnist_classification.py_ - script for SVM with RBF kernel classification
 * _svm_mnist_embedings.py_ - script for linear SVM with embedings
 
 ### SVM with RBF kernel
