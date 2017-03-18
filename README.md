@@ -3,7 +3,8 @@
 Project presents well known problem of [MNIST handwritten digit classification](https://en.wikipedia.org/wiki/MNIST_database). For the puropose of this tutorial I will use [Support Vector Machine (SVM)](https://en.wikipedia.org/wiki/Support_vector_machine) algorithm with raw pixel features. Solution is written in python with use of [scikit-learn](http://scikit-learn.org/stable/) easy to use machine learning library.
 
 
-The goal of this project is to not to achieve the state of the art performance, rather to teach you **how to train SVM classifier on image data**. 
+The goal of this project is not to achieve the state of the art performance, rather to teach you 
+**how to train SVM classifier on image data**. 
 If you want to hit the top performance, this two resources will show you current state of the art
 
 * [Who is the best in MNIST ?](http://rodrigob.github.io/are_we_there_yet/build/classification_datasets_results.html#4d4e495354)
@@ -38,13 +39,13 @@ In this tutorial I use two approches for SVM learning. First, uses classical SVM
 
 Project consist of three files:
 
-* mnist_helpers.py - contains some visualization functions
-* svm_mnist_classification.py - main file for SVM with RBF kernel classification
-* svm_mnist_embedings.py - script for linear SVM with embedings
+* _mnist_helpers.py_ - contains some visualization functions
+* _svm_mnist_classification.py_ - main file for SVM with RBF kernel classification
+* _svm_mnist_embedings.py_ - script for linear SVM with embedings
 
-**SVM with RBF kernel**
+### SVM with RBF kernel
 
-The svm_mnist_classification.py script downloads the MNIST database and visualize some random digits. Next, it standarize the data (mean=0, std=1) and lauchn grid search with cross validation for finding the best parameters.
+The _svm_mnist_classification.py_ script downloads the MNIST database and visualize some random digits. Next, it standarize the data (mean=0, std=1) and lauchn grid search with cross validation for finding the best parameters.
 
 Grid search is very time consuming process, so you can use my best parameters (from the range C=[], gamma=[]):
 * C = ??
@@ -57,15 +58,24 @@ With this params:
 
 
 
-**Linear SVM with different embedings**
+### Linear SVM with different embedings
 
+The script _svm_mnist_embedings.py_ presents accuracy summury and training times for 
+full RBF kernel, linear SVC, and linear SVC with two kernel aproximation 
+Nystroem and Fourier.
 
+This technique is really useful if you have big datasets. Learning SVM with RBF kernel 
+could be time consuming. The time complexity of this solution is O(n^2) while specialized
+linear svm (liblinar, SGD etc) has O(n). In order to be more expressive we try to aproximate
+nonlinear kernel, map vectors int higher dimensional space explicity and use fast linear SVM in 
+this new space.
 
 
 
 ## Further improvements
  
 * Augmenting the training set with artificial samples
+* Using Randomized param search
 
 
 ## Source code

@@ -7,14 +7,17 @@ print(__doc__)
 import matplotlib.pyplot as plt
 import numpy as np
 import time
+import datetime as dt
+
 # Import datasets, classifiers and performance metrics
 from sklearn import datasets, svm, metrics
+#fetch original mnist dataset
+from sklearn.datasets import fetch_mldata
 
+# import custom module
 from mnist_helpers import *
 
 
-#fetch original mnist dataset
-from sklearn.datasets import fetch_mldata
 mnist = fetch_mldata('MNIST original', data_home='./')
 
 #minist object contains: data, COL_NAMES, DESCR, target fields
@@ -53,20 +56,29 @@ X_train, X_test, y_train, y_test = train_test_split(X_data, Y, test_size=0.15, r
 # standalone SVM classifier
 
 # Create parameters grid for RBF kernel, we have to set C and gamma
-# from sklearn.model_selection import ParameterGrid
-# param_grid = [{'kernel': ['rbf'], 'C': [0.1,1], 'gamma': [0.1]}]
-# pg =ParameterGrid(param_grid)
-# list(pg)
+from sklearn.model_selection import ParameterGrid
+param_grid = [{'kernel': ['rbf'], 'C': [0.1,1], 'gamma': [0.1]}]
+pg =ParameterGrid(param_grid)
+list(pg)
 
-# from sklearn.model_selection import GridSearchCV
-# parameters = {'kernel':['rbf'], 'C':[1], 'gamma': [0.1, 0.01]}
+from sklearn.model_selection import GridSearchCV
+parameters = {'kernel':['rbf'], 'C':[1], 'gamma': [0.1, 0.01]}
 
-# svm_clsf = svm.SVC()
-# grid_clsf = GridSearchCV(svm_clsf, parameters)
-#sorted(grid_clsf.cv_results_.keys())
+svm_clsf = svm.SVC()
+grid_clsf = GridSearchCV(svm_clsf, parameters)
 
-#classifier = grid_clsf.best_estimator_
-#params = grid_clsf.best_params
+
+start_time = dt.datetime.now()
+print('Start param searching at {}'.format(str(start_time)))
+
+grid_clsf.fit(X_train, y_train)
+
+elapsed_time= dt.datetime.now() - start_time
+print('Elapsed time, param searching {}'.format(str(elapsed_time)))
+sorted(grid_clsf.cv_results_.keys())
+
+classifier = grid_clsf.best_estimator_
+params = grid_clsf.best_params
 
 ######################### end grid section #############
 
@@ -75,12 +87,16 @@ X_train, X_test, y_train, y_test = train_test_split(X_data, Y, test_size=0.15, r
 ################ Classifier with good params ###########
 # Create a classifier: a support vector classifier
 
-classifier = svm.SVC(C=1,gamma=0.01)
+param_C = params.C
+param_gamma = params.gamma
+
+# param_C = 1
+# param_gamma = 0.01
+classifier = svm.SVC(C=param_C,gamma=param_gamma)
 
 ########################################################
 
 
-import datetime as dt
 # We learn the digits on train part
 start_time = dt.datetime.now()
 print('Start learning at {}'.format(str(start_time)))
