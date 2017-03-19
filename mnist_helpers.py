@@ -23,7 +23,11 @@ def show_some_digits(images, targets, sample_size=24, title_text='Digit {}' ):
         plt.title(title_text.format(label))
 
 def plot_confusion_matrix(cm, title='Confusion matrix', cmap=plt.cm.Blues):
+    """
+    Plots confusion matrix, 
     
+    cm - confusion matrix
+    """
     plt.figure(1, figsize=(15, 12), dpi=160)
     plt.imshow(cm, interpolation='nearest', cmap=cmap)
     plt.title(title)
@@ -32,3 +36,34 @@ def plot_confusion_matrix(cm, title='Confusion matrix', cmap=plt.cm.Blues):
     plt.ylabel('True label')
     plt.xlabel('Predicted label')    
     
+
+
+def plot_param_space_scores(scores, C_range, gamma_range):
+    """
+    Draw heatmap of the validation accuracy as a function of gamma and C
+    
+    
+    Parameters
+    ----------
+    scores - 2D numpy array with accuracies
+    
+    """
+    #
+    # The score are encoded as colors with the hot colormap which varies from dark
+    # red to bright yellow. As the most interesting scores are all located in the
+    # 0.92 to 0.97 range we use a custom normalizer to set the mid-point to 0.92 so
+    # as to make it easier to visualize the small variations of score values in the
+    # interesting range while not brutally collapsing all the low score values to
+    # the same color.
+
+    
+    plt.figure(figsize=(8, 6))
+    plt.subplots_adjust(left=.2, right=0.95, bottom=0.15, top=0.95)
+    plt.imshow(scores, interpolation='nearest', cmap=plt.cm.hot)
+    plt.xlabel('gamma')
+    plt.ylabel('C')
+    plt.colorbar()
+    plt.xticks(np.arange(len(gamma_range)), gamma_range, rotation=45)
+    plt.yticks(np.arange(len(C_range)), C_range)
+    plt.title('Validation accuracy')
+    plt.show()

@@ -56,13 +56,22 @@ X_train, X_test, y_train, y_test = train_test_split(X_data, Y, test_size=0.15, r
 # standalone SVM classifier
 
 # Create parameters grid for RBF kernel, we have to set C and gamma
-from sklearn.model_selection import ParameterGrid
-param_grid = [{'kernel': ['rbf'], 'C': [0.1,1], 'gamma': [0.1]}]
-pg =ParameterGrid(param_grid)
-list(pg)
-
 from sklearn.model_selection import GridSearchCV
-parameters = {'kernel':['rbf'], 'C':[1], 'gamma': [0.1, 0.01]}
+
+# generate matrix with all gammas
+# [ [10^-4, 2*10^-4, 5*10^-4], 
+#   [10^-3, 2*10^-3, 5*10^-3],
+#   ......
+#   [10^3, 2*10^3, 5*10^3] ]
+gamma_range = np.outer(np.logspace(-4, 3, 8),np.array([1,2, 5]))
+gamma_range = gamma_range.flatten()
+
+# generate matrix with all C
+C_range = np.outer(np.logspace(-3, 3, 7),np.array([1,2, 5]))
+# flatten matrix, change to 1D numpy array
+C_range = C_range.flatten()
+
+parameters = {'kernel':['rbf'], 'C':C_range, 'gamma': gamma_range}
 
 svm_clsf = svm.SVC()
 grid_clsf = GridSearchCV(svm_clsf, parameters)
@@ -78,7 +87,15 @@ print('Elapsed time, param searching {}'.format(str(elapsed_time)))
 sorted(grid_clsf.cv_results_.keys())
 
 classifier = grid_clsf.best_estimator_
-params = grid_clsf.best_params
+params = grid_clsf.best_params_
+
+
+
+scores = grid.cv_results_['mean_test_score'].reshape(len(C_range),
+                                                     len(gamma_range))
+
+plot_param_space_scores(scores, C_range, gamma_range)
+
 
 ######################### end grid section #############
 
@@ -87,24 +104,23 @@ params = grid_clsf.best_params
 ################ Classifier with good params ###########
 # Create a classifier: a support vector classifier
 
-param_C = params.C
-param_gamma = params.gamma
-
 # param_C = 1
 # param_gamma = 0.01
-classifier = svm.SVC(C=param_C,gamma=param_gamma)
+#classifier = svm.SVC(C=param_C,gamma=param_gamma)
+
+# We learn the digits on train part
+# start_time = dt.datetime.now()
+# print('Start learning at {}'.format(str(start_time)))
+# classifier.fit(X_train, y_train)
+# end_time = dt.datetime.now() 
+# print('Stop learning {}'.format(str(end_time)))
+# elapsed_time= end_time - start_time
+# print('Elapsed learning {}'.format(str(elapsed_time)))
+
 
 ########################################################
 
 
-# We learn the digits on train part
-start_time = dt.datetime.now()
-print('Start learning at {}'.format(str(start_time)))
-classifier.fit(X_train, y_train)
-end_time = dt.datetime.now() 
-print('Stop learning {}'.format(str(end_time)))
-elapsed_time= end_time - start_time
-print('Elapsed learning {}'.format(str(elapsed_time)))
 
 
 # Now predict the value of the test
