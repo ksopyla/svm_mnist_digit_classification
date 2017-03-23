@@ -2,6 +2,10 @@
 
 Project presents well known problem of [MNIST handwritten digit classification](https://en.wikipedia.org/wiki/MNIST_database). For the puropose of this tutorial I will use [Support Vector Machine (SVM)](https://en.wikipedia.org/wiki/Support_vector_machine) algorithm with raw pixel features. Solution is written in python with use of [scikit-learn](http://scikit-learn.org/stable/) easy to use machine learning library.
 
+![Sample MNIST digits visualization](https://plon.io/files/58cfb7171b12ce00012bd6bf)
+
+
+
 
 The goal of this project is not to achieve the state of the art performance, rather to teach you 
 **how to train SVM classifier on image data**. 
@@ -18,7 +22,7 @@ Table below shows some results in comparison with other models:
 | Random forest                              | 0.937    |              |
 | Simple one-layer neural network            | 0.926    |              |
 | Simple 2 layer convolutional network       | 0.981    |              |
-| SVM RBF                                    |          | C=?, gamma=? |
+| SVM RBF                                    |          | C=5, gamma=0.05 |
 | Linear SVM + Nystroem kernel approximation |          |              |
 | Linear SVM + Fourier kernel approximation  |          |              |
 ------------------------------------------------------------------------
@@ -52,11 +56,32 @@ Project consist of three files:
 
 ### SVM with RBF kernel
 
-The _svm_mnist_classification.py_ script downloads the MNIST database and visualize some random digits. Next, it standarize the data (mean=0, std=1) and lauchn grid search with cross validation for finding the best parameters.
+The _svm_mnist_classification.py_ script downloads the MNIST database and visualize some random digits.
+Next, it standarize the data (mean=0, std=1) and lauchn grid search with cross validation for finding the best parameters.
+
+Grid search was done for params C and gamma, where C=[0.1,0.5,1,5], gamma=[0.01,0.0.05,0.1,0.5].
+I have examine only 4x4 different param pairs with 3 fold cross validation so far (4x4x3=48 models), 
+this procedure takes 3687.2min :) (2 days, 13:56:42.531223 exacly) on one core CPU.
+
+Param space was generated with numpy logspace and outer matrix multiplication. 
+```
+C_range = np.outer(np.logspace(-1, 0, 2),np.array([1,5]))
+# flatten matrix, change to 1D numpy array
+C_range = C_range.flatten()
+
+gamma_range = np.outer(np.logspace(-2, -1, 2),np.array([1,5]))
+gamma_range = gamma_range.flatten()
+
+```
+Of course, you can broaden the range of parameters, but this will increase the computation time.
+
+
+![SVM RBF param space](https://plon.io/files/58d3af091b12ce00012bd6e1)
+
 
 Grid search is very time consuming process, so you can use my best parameters (from the range C=[], gamma=[]):
-* C = ??
-* gamma = ??
+* C = 5
+* gamma = 0.05
 
 With this params:
 

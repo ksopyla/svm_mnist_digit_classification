@@ -55,6 +55,8 @@ X_train, X_test, y_train, y_test = train_test_split(X_data, Y, test_size=0.15, r
 # If you don't want to wait, comment this section and uncommnet section below with
 # standalone SVM classifier
 
+# Warning! It takes really long time to compute this about 2 days
+
 # Create parameters grid for RBF kernel, we have to set C and gamma
 from sklearn.model_selection import GridSearchCV
 
@@ -63,18 +65,20 @@ from sklearn.model_selection import GridSearchCV
 #   [10^-3, 2*10^-3, 5*10^-3],
 #   ......
 #   [10^3, 2*10^3, 5*10^3] ]
-gamma_range = np.outer(np.logspace(-4, 3, 8),np.array([1,2, 5]))
+#gamma_range = np.outer(np.logspace(-4, 3, 8),np.array([1,2, 5]))
+gamma_range = np.outer(np.logspace(-2, -1, 2),np.array([1,5]))
 gamma_range = gamma_range.flatten()
 
 # generate matrix with all C
-C_range = np.outer(np.logspace(-3, 3, 7),np.array([1,2, 5]))
+#C_range = np.outer(np.logspace(-3, 3, 7),np.array([1,2, 5]))
+C_range = np.outer(np.logspace(-1, 0, 2),np.array([1,5]))
 # flatten matrix, change to 1D numpy array
 C_range = C_range.flatten()
 
 parameters = {'kernel':['rbf'], 'C':C_range, 'gamma': gamma_range}
 
 svm_clsf = svm.SVC()
-grid_clsf = GridSearchCV(svm_clsf, parameters)
+grid_clsf = GridSearchCV(estimator=svm_clsf,param_grid=parameters,n_jobs=1, verbose=2)
 
 
 start_time = dt.datetime.now()
@@ -91,7 +95,7 @@ params = grid_clsf.best_params_
 
 
 
-scores = grid.cv_results_['mean_test_score'].reshape(len(C_range),
+scores = grid_clsf.cv_results_['mean_test_score'].reshape(len(C_range),
                                                      len(gamma_range))
 
 plot_param_space_scores(scores, C_range, gamma_range)
@@ -104,8 +108,8 @@ plot_param_space_scores(scores, C_range, gamma_range)
 ################ Classifier with good params ###########
 # Create a classifier: a support vector classifier
 
-# param_C = 1
-# param_gamma = 0.01
+# param_C = 5
+# param_gamma = 0.05
 #classifier = svm.SVC(C=param_C,gamma=param_gamma)
 
 # We learn the digits on train part
