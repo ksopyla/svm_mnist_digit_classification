@@ -1,15 +1,19 @@
 # SVM MNIST digit classification in python using scikit-learn
 
-Project presents well known problem of [MNIST handwritten digit classification](https://en.wikipedia.org/wiki/MNIST_database). For the puropose of this tutorial I will use [Support Vector Machine (SVM)](https://en.wikipedia.org/wiki/Support_vector_machine) algorithm with raw pixel features. Solution is written in python with use of [scikit-learn](http://scikit-learn.org/stable/) easy to use machine learning library.
+Project presents well known problem of [MNIST handwritten digit classification](https://en.wikipedia.org/wiki/MNIST_database).
+For the puropose of this tutorial I will use [Support Vector Machine (SVM)](https://en.wikipedia.org/wiki/Support_vector_machine) 
+algorithm with raw pixel features. 
+Solution is written in python with use of [scikit-learn](http://scikit-learn.org/stable/) easy to use machine learning library.
 
 ![Sample MNIST digits visualization](https://plon.io/files/58cfb7171b12ce00012bd6bf)
 
 
 
-
 The goal of this project is not to achieve the state of the art performance, rather to teach you 
-**how to train SVM classifier on image data**. 
-If you want to hit the top performance, this two resources will show you current state of the art
+**how to train SVM classifier on image data** with use of SVM from sklearn. 
+Althoug the sollution isn't optimized for high accuracy, the results are quite good (see table below). 
+
+If you want to hit the top performance, this two resources will show you current state of the art sollutions:
 
 * [Who is the best in MNIST ?](http://rodrigob.github.io/are_we_there_yet/build/classification_datasets_results.html#4d4e495354)
 * [Kaggle digit recognizer comptetition](https://www.kaggle.com/c/digit-recognizer)
@@ -22,10 +26,11 @@ Table below shows some results in comparison with other models:
 | Random forest                              | 0.937    |              |
 | Simple one-layer neural network            | 0.926    |              |
 | Simple 2 layer convolutional network       | 0.981    |              |
-| SVM RBF                                    |          | C=5, gamma=0.05 |
+| SVM RBF                                    | 0.9852   | C=5, gamma=0.05 |
 | Linear SVM + Nystroem kernel approximation |          |              |
 | Linear SVM + Fourier kernel approximation  |          |              |
-------------------------------------------------------------------------
+
+
 
 
 ## Solution
@@ -36,12 +41,11 @@ long training on big datasets, although the accuracy with good parameters is hig
 The second, uses Linear SVM, which allows for training in O(n) time. In order to 
 achieve high accuracy we use some trick. We aproximate RBF kernel in a high dimensional 
 space by embedings. The teory behind is quite complicated, 
-however [scikit-learn has ready to use clases for kernel approximation](http://scikit-learn.org/stable/modules/kernel_approximation.html#kernel-approximation). 
+however [sklearn has ready to use clases for kernel approximation](http://scikit-learn.org/stable/modules/kernel_approximation.html#kernel-approximation). 
 We will use:
 
 * Nystroem kernel approximation
 * Fourier kernel approximation
-
 
 The code was tested with python 2.7 and python 3.5.
 
@@ -79,28 +83,59 @@ Of course, you can broaden the range of parameters, but this will increase the c
 ![SVM RBF param space](https://plon.io/files/58d3af091b12ce00012bd6e1)
 
 
-Grid search is very time consuming process, so you can use my best parameters (from the range C=[], gamma=[]):
+Grid search is very time consuming process, so you can use my best parameters 
+(from the range c=[0.1,5], gamma=[0.01,0.05]):
 * C = 5
 * gamma = 0.05
+* accuracy = 0.9852
 
-With this params:
 
-* training time =
-* accuracy: 
+```
+Confusion matrix:
+[[1014    0    2    0    0    2    2    0    1    3]
+ [   0 1177    2    1    1    0    1    0    2    1]
+ [   2    2 1037    2    0    0    0    2    5    1]
+ [   0    0    3 1035    0    5    0    6    6    2]
+ [   0    0    1    0  957    0    1    2    0    3]
+ [   1    1    0    4    1  947    4    0    5    1]
+ [   2    0    1    0    2    0 1076    0    4    0]
+ [   1    1    8    1    1    0    0 1110    2    4]
+ [   0    4    2    4    1    6    0    1 1018    1]
+ [   3    1    0    7    5    2    0    4    9  974]]
+Accuracy=0.985238095238
+```
+
+
 
 
 
 ### Linear SVM with different embedings
 
-The script _svm_mnist_embedings.py_ presents accuracy summury and training times for 
+Linear SVM's (SVM with linear kernels) have this advantages that there are many O(n)
+trainning algorithms. They are really fast in comparision with other nonlinear SVM (where most of them are O(n^2)).
+This technique is really useful if you want to train on big data.
+
+Linear SVM algortihtms examples(papers and software):
+
+* [Pegasos](http://ttic.uchicago.edu/~nati/Publications/PegasosMPB.pdf)
+* [Stochastic gradient descent](http://leon.bottou.org/projects/sgd)
+* [Averaged Stochastic gradient descent](https://arxiv.org/abs/1107.2490)
+* [Liblinear](https://www.csie.ntu.edu.tw/~cjlin/liblinear/)
+* [Stochastic Gradient Descent with Barzilai–Borwein update step for SVM](http://www.sciencedirect.com/science/article/pii/S0020025515002467)
+* [Primal SVM by Olivier Chappelle](http://olivier.chapelle.cc/primal/) - there also exists [Primal SVM in Python](https://github.com/ksopyla/primal_svm)
+
+Unfortunatelly, linear SVM isn't powerfull enough to classify data with accuraccy 
+comparable to RBF SVM.
+
+Learning SVM with RBF kernel could be time consuming. In order to be more expressive we try to aproximate
+nonlinear kernel, map vectors int higher dimensional space explicity and use fast linear SVM in 
+this new space. This works extreamly well!
+
+
+The script _svm_mnist_embedings.py_ presents accuracy summary and training times for 
 full RBF kernel, linear SVC, and linear SVC with two kernel aproximation 
 Nystroem and Fourier.
 
-This technique is really useful if you have big datasets. Learning SVM with RBF kernel 
-could be time consuming. The time complexity of this solution is O(n^2) while specialized
-linear svm (liblinar, SGD etc) has O(n). In order to be more expressive we try to aproximate
-nonlinear kernel, map vectors int higher dimensional space explicity and use fast linear SVM in 
-this new space.
 
 
 

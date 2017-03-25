@@ -66,12 +66,12 @@ from sklearn.model_selection import GridSearchCV
 #   ......
 #   [10^3, 2*10^3, 5*10^3] ]
 #gamma_range = np.outer(np.logspace(-4, 3, 8),np.array([1,2, 5]))
-gamma_range = np.outer(np.logspace(-2, -1, 2),np.array([1,5]))
+gamma_range = np.outer(np.logspace(-3, 0, 4),np.array([1,5]))
 gamma_range = gamma_range.flatten()
 
 # generate matrix with all C
 #C_range = np.outer(np.logspace(-3, 3, 7),np.array([1,2, 5]))
-C_range = np.outer(np.logspace(-1, 0, 2),np.array([1,5]))
+C_range = np.outer(np.logspace(-1, 1, 3),np.array([1,5]))
 # flatten matrix, change to 1D numpy array
 C_range = C_range.flatten()
 
