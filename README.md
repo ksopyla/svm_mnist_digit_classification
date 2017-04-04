@@ -60,8 +60,10 @@ Project consist of three files:
 
 ### SVM with RBF kernel
 
-The _svm_mnist_classification.py_ script downloads the MNIST database and visualize some random digits.
+The **svm_mnist_classification.py** script downloads the MNIST database and visualize some random digits.
 Next, it standarize the data (mean=0, std=1) and lauchn grid search with cross validation for finding the best parameters.
+
+1. MNIST SVM kernel RBF Param search C=[0.1,0.5,1,5], gamma=[0.01,0.0.05,0.1,0.5].
 
 Grid search was done for params C and gamma, where C=[0.1,0.5,1,5], gamma=[0.01,0.0.05,0.1,0.5].
 I have examine only 4x4 different param pairs with 3 fold cross validation so far (4x4x3=48 models), 
@@ -81,7 +83,6 @@ Of course, you can broaden the range of parameters, but this will increase the c
 
 
 ![SVM RBF param space](https://plon.io/files/58d3af091b12ce00012bd6e1)
-
 
 Grid search is very time consuming process, so you can use my best parameters 
 (from the range c=[0.1,5], gamma=[0.01,0.05]):
@@ -106,6 +107,17 @@ Accuracy=0.985238095238
 ```
 
 
+2. MNIST SVM kernel RBF Param search C=[0.1,0.5,1,5, 10, 50], gamma=[0.001, 0.005, 0.01,0.0.05,0.1,0.5].
+
+This much broaden search 6x8 params with 3 fold cross validation gives 6x8x3=144 models, 
+this procedure takes **13024.3min**  (9 days, 1:33:58.999782 exacly) on one core CPU.
+
+![SVM RBF param space](https://plon.io/files/58e171451b12ce00012bd71d)
+
+Best parameters:
+* C = 5
+* gamma = 0.05
+* accuracy = 0.9852
 
 
 
