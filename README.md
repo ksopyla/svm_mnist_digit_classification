@@ -44,7 +44,7 @@ We will use:
 * Nystroem kernel approximation
 * Fourier kernel approximation
 
-The code was tested with python 2.7 and python 3.5.
+The code was tested with python 3.6.
 
 
 ## How the project is organized
