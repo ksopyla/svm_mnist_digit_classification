@@ -15,7 +15,7 @@ from time import time
 
 
 
-from sklearn.model_selection import RandomizedSearchCV
+
 
 
 
@@ -47,11 +47,6 @@ targets = mnist.target
 show_some_digits(images,targets)
 
 #---------------- classification begins -----------------
-#scale data for [0,255] -> [0,1]
-#sample smaller size for testing
-#rand_idx = np.random.choice(images.shape[0],10000)
-#X_data =images[rand_idx]/255.0
-#Y      = targets[rand_idx]
 
 #full dataset classification
 X_data = images/255.0
@@ -63,29 +58,28 @@ from sklearn.model_selection import train_test_split
 X_train, X_test, y_train, y_test = train_test_split(X_data, Y, test_size=0.15, random_state=42)
 
 
-############### Classification with grid search ##############
+############### Classification with random search ##############
 
-# Warning! It takes really long time to compute this about 2 days
-
-# Create parameters grid for RBF kernel, we have to set C and gamma
-
-from scipy.stats import randint as sp_randint
 from scipy.stats import uniform as sp_uniform
 
+# Create parameters grid for RBF kernel, we have to set C and gamma
 C_range = sp_uniform(scale=10)
 gamma_range = sp_uniform(scale=1)
 parameters = {'kernel':['rbf'],
               'C':C_range, 
               'gamma': gamma_range
  }
-
-n_iter_search = 10
+from sklearn.model_selection import RandomizedSearchCV
+n_iter_search = 1
 svm_clsf = svm.SVC()
-rnd_clsf = RandomizedSearchCV(estimator=svm,
+rnd_clsf = RandomizedSearchCV(estimator=svm_clsf,
                               param_distributions=parameters,
-                              n_iter=n_iter_search, cv=5,
+                              n_iter=n_iter_search, 
+                              cv=3,
+                              n_jobs=1,
                               verbose=2)
 
+# Warning! It takes really long time to compute this about 2 days
 start_time = dt.datetime.now()
 print('Start param searching at {}'.format(str(start_time)))
 
@@ -106,7 +100,7 @@ scores = rnd_clsf.cv_results_['mean_test_score'].reshape(len(C_range),
 plot_param_space_scores(scores, C_range, gamma_range)
 
 
-######################### end grid section #############
+######################### end random search section #############
 
 # Now predict the value of the test
 expected = y_test
