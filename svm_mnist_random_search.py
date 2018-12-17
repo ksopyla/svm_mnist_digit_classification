@@ -52,10 +52,21 @@ show_some_digits(images,targets)
 X_data = images/255.0
 Y = targets
 
+
+# we use only random 3000 samples to speed up process
+# this is only for presentation purposes
+# comment it in a production
+np.random.seed(0)
+rnd_idx = np.random.randint(0,70000,3000)
+X_data = X_data[rnd_idx,:]
+Y = Y[rnd_idx]
+
 #split data to train and test
 #from sklearn.cross_validation import train_test_split
 from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X_data, Y, test_size=0.15, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X_data, Y, 
+                                                    test_size=0.15, 
+                                                    random_state=42)
 
 
 ############### Classification with random search ##############
@@ -63,14 +74,14 @@ X_train, X_test, y_train, y_test = train_test_split(X_data, Y, test_size=0.15, r
 from scipy.stats import uniform as sp_uniform
 
 # Create parameters grid for RBF kernel, we have to set C and gamma
-C_range = sp_uniform(scale=10)
-gamma_range = sp_uniform(scale=1)
+C_dist = sp_uniform(scale=10)
+gamma_dist = sp_uniform(scale=1)
 parameters = {'kernel':['rbf'],
-              'C':C_range, 
-              'gamma': gamma_range
+              'C':C_dist, 
+              'gamma': gamma_dist
  }
 from sklearn.model_selection import RandomizedSearchCV
-n_iter_search = 1
+n_iter_search = 8
 svm_clsf = svm.SVC()
 rnd_clsf = RandomizedSearchCV(estimator=svm_clsf,
                               param_distributions=parameters,
@@ -93,11 +104,12 @@ classifier = rnd_clsf.best_estimator_
 params = rnd_clsf.best_params_
 
 
+range_C = rnd_clsf.cv_results_['param_C']
+range_gamma = rnd_clsf.cv_results_['param_gamma']
 
-scores = rnd_clsf.cv_results_['mean_test_score'].reshape(len(C_range),
-                                                     len(gamma_range))
+scores = rnd_clsf.cv_results_['mean_test_score']
 
-plot_param_space_scores(scores, C_range, gamma_range)
+plot_param_space_bubble(scores, range_C, range_gamma)
 
 
 ######################### end random search section #############

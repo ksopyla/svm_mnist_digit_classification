@@ -110,7 +110,7 @@ params = grid_clsf.best_params_
 scores = grid_clsf.cv_results_['mean_test_score'].reshape(len(C_range),
                                                      len(gamma_range))
 
-plot_param_space_scores(scores, C_range, gamma_range)
+plot_param_space_heatmap(scores, C_range, gamma_range)
 
 
 ######################### end grid section #############

@@ -49,7 +49,7 @@ class MidpointNormalize(Normalize):
         x, y = [self.vmin, self.midpoint, self.vmax], [0, 0.5, 1]
         return np.ma.masked_array(np.interp(value, x, y))
 
-def plot_param_space_scores(scores, C_range, gamma_range):
+def plot_param_space_heatmap(scores, C_range, gamma_range):
     """
     Draw heatmap of the validation accuracy as a function of gamma and C
     
@@ -80,6 +80,31 @@ def plot_param_space_scores(scores, C_range, gamma_range):
     plt.title('Validation accuracy')
     plt.show()
     
+
+def plot_param_space_bubble(scores, x_range, y_range):
+    """
+    Plot scatter plot of the validation accuracy as a function of gamma and C
+        
+    Parameters
+    ----------
+    scores - 2D numpy array with accuracies
+    
+    """
+    
+    plt.figure(figsize=(8, 6))
+    plt.subplots_adjust(left=.2, right=0.95, bottom=0.15, top=0.95)
+    
+    # Change color with c and alpha. I map the color to the X axis value.
+    plt.scatter(x_range, y_range, s=scores*2000, c=scores, cmap="Blues", alpha=0.4, edgecolors="grey", linewidth=2)
+
+
+    plt.xlabel('C')
+    plt.ylabel('gamma')
+    plt.colorbar()
+    # plt.xticks(np.arange(len(gamma_range)), gamma_range, rotation=45)
+    # plt.yticks(np.arange(len(C_range)), C_range)
+    plt.title('Validation accuracy')
+    plt.show()
     
     
     
