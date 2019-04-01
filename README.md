@@ -153,12 +153,6 @@ Nystroem and Fourier.
 * Using Randomized param search
 
 
-## Source code
-
-* [Download SVM MNIST code from GitHub](https://github.com/ksirg/svm_mnist_digit_classification)
-* [Run SVM MNIST project online](https://plon.io/explore/svm-mnist-handwritten-digit/USpQjoNcO8QHlmG6T)
-
-
 ## Useful SVM MNIST learning materials
 
 * [MNIST handwritten digit recognition](http://brianfarris.me/static/digit_recognizer.html) - author compares an accuracy of a few machine learning classification algorithms (Random Forest, Stochastic Gradient Descent, Support Vector Machine, Nearest Neighbors)
