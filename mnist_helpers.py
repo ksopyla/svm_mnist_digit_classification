@@ -22,6 +22,7 @@ def show_some_digits(images, targets, sample_size=24, title_text='Digit {}' ):
         #each image is flat, we have to reshape to 2D array 28x28-784
         plt.imshow(image.reshape(28,28), cmap=plt.cm.gray_r, interpolation='nearest')
         plt.title(title_text.format(label))
+    plt.show()
 
 def plot_confusion_matrix(cm, title='Confusion matrix', cmap=plt.cm.Blues):
     """

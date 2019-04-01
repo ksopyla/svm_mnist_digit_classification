@@ -5,7 +5,7 @@ For the purpose of this tutorial, I will use [Support Vector Machine (SVM)](http
 the algorithm with raw pixel features. 
 The solution is written in python with use of [scikit-learn](http://scikit-learn.org/stable/) easy to use machine learning library.
 
-![Sample MNIST digits visualization](https://plon.io/files/58cfb7171b12ce00012bd6bf)
+![Sample MNIST digits visualization](/images/mnist_digits.png)
 
 
 
@@ -29,6 +29,30 @@ The table below shows some results in comparison with other models:
 | SVM RBF                                    | 0.9852   | C=5, gamma=0.05 |
 | Linear SVM + Nystroem kernel approximation |          |              |
 | Linear SVM + Fourier kernel approximation  |          |              |
+
+
+## Project Setup
+
+This tutorial was written and tested on Ubuntu 18.10.
+Project contains the Pipfile with all necessary libraries
+
+* Python - version >= 3.6 
+* pipenv - package and virtual environment management 
+* numpy
+* matplotlib
+* scikit-learn
+
+
+1. Install Python.
+1. [Install pipenv](https://pipenv.readthedocs.io/en/latest/install/#pragmatic-installation-of-pipenv)
+1. Git clone the repository
+1. Install all necessary python packages executing this command in terminal
+
+```
+git clone https://github.com/ksopyla/svm_mnist_digit_classification.git
+cd svm_mnist_digit_classification
+pipenv install
+```
 
 
 
