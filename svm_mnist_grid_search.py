@@ -90,6 +90,8 @@ C_range = C_range.flatten()
 parameters = {'kernel':['rbf'], 'C':C_range, 'gamma': gamma_range}
 
 svm_clsf = svm.SVC()
+
+# increase n_jobs in order to run in parallel
 grid_clsf = GridSearchCV(estimator=svm_clsf,param_grid=parameters,n_jobs=1, verbose=2)
 
 

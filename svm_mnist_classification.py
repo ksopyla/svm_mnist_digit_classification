@@ -35,6 +35,7 @@ targets = mnist.target
 #pick  random indexes from 0 to size of our dataset
 show_some_digits(images,targets)
 
+
 #---------------- classification begins -----------------
 #scale data for [0,255] -> [0,1]
 #sample smaller size for testing

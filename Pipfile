@@ -5,7 +5,7 @@ name = "pypi"
 
 [packages]
 matplotlib = "*"
-scikit-learn = "*"
+scikit-learn = "~=0.20"
 
 [dev-packages]
 pylint = "*"
